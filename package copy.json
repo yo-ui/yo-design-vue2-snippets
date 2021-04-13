@@ -1,5 +1,5 @@
 {
-	"name": "yo-design-vue2-snippets",
+	"name": "yo-design-vue2-vs",
 	"displayName": "YOUI Vue2.x Snippets",
 	"description": "Visual Studio Code YOUI Vuex2.x UI框架VSCode代码提示插件",
 	"version": "0.0.1",
@@ -7,16 +7,32 @@
 		"vscode": "^1.55.0"
 	},
 	"categories": [
-		"Snippets",
 		"Other"
 	],
 	"activationEvents": [
 		"onCommand:yo-design-vue2-vs.helloWorld",
+		"onLanguage:html",
 		"onLanguage:javascript",
 		"onLanguage:vue",
 		"onLanguage:vue-html",
-		"onLanguage:html",
 		"onLanguage:jsx"
+	],
+	"languages": [
+		{
+			"id": "vue",
+			"extensions": [
+				".vue",
+				".jsx",
+				".js",
+				".html",
+				".htm"
+			],
+			"aliases": [
+				"Vue",
+				"VUE",
+				"vue"
+			]
+		}
 	],
 	"icon": "images/logo.png",
 	"main": "./src/extension.js",
@@ -65,14 +81,6 @@
 				"path": "./snippets/html.json"
 			},
 			{
-				"language": "vue",
-				"path": "./snippets/html.json"
-			},
-			{
-				"language": "vue-html",
-				"path": "./snippets/html.json"
-			},
-			{
 				"language": "javascript",
 				"path": "./snippets/javascript.json"
 			}
@@ -92,6 +100,7 @@
 				{
 					"id": "nodeDependencies",
 					"name": "Node Dependencies",
+					"when": "workspaceHasPackageJSON",
 					"contextualTitle": "Package Explorer"
 				}
 			],

@@ -1,3 +1,7 @@
+/**
+ * yo-design-vue2 代码提示插件  
+ * created by eric 2021-04-12
+ */
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
@@ -6,7 +10,8 @@ const vscode = require('vscode');
 // your extension is activated the very first time the command is executed
 
 /**
- * @param {vscode.ExtensionContext} context
+ * 代码入口函数
+ * @param {vscode.ExtensionContext} context  插件上下文
  */
 function activate(context) {
 
@@ -26,9 +31,13 @@ function activate(context) {
 
 	context.subscriptions.push(disposable);
 }
-
+/**
+ * 插件释放时触发
+ */
 // this method is called when your extension is deactivated
-function deactivate() {}
+function deactivate() {
+	console.log("yo-design-vue2-vs插件已被释放")
+}
 
 module.exports = {
 	activate,

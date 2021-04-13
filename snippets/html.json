@@ -1,0 +1,58 @@
+{
+  "y-vue-page-js": {
+    "prefix": "yvbase",
+    "body": [
+      "<template>",
+      "\t<div>",
+      "\t</div>",
+      "</template>",
+      "\r<script>",
+      "\texport default {",
+      "\t\tdata() {",
+      "\t\t\treturn {};",
+      "\t\t},",
+      "\t\tmounted() {",
+      "\t\t}",
+      "\t}",
+      "</script>",
+      "\r<style lang=\"less\">",
+      "</style>"
+    ],
+    "description": "YOUI Vue2.x 页面模板js-less"
+  },
+  "y-vue-page-ts": {
+    "prefix": "yvbase-ts",
+    "body": [
+      "<template>",
+      "\t<div>",
+      "\t</div>",
+      "</template>",
+      "\r<script lang=\"ts\">",
+      "import { Component, Vue, Prop } from 'vue-property-decorator';",
+      "import { Row, Col } from 'yo-design-vue';",
+      "@Component({",
+      "\t name: '${1}',",
+      "\t components: {",
+      "\t\t [Row.name]: Row,",
+      "\t\t [Col.name]: Col,",
+      "\t }",
+      "})",
+      "export default class ${1} extends Vue {",
+      "\t created() {",
+      "",
+      "\t }",
+      "}",
+      "</script>",
+      "\r<style lang=\"less\">",
+      "</style>"
+    ],
+    "description": "YOUIVue2.x 页面模板 typescript-less"
+  },
+  "y-button": {
+    "prefix": "yb",
+    "body": [
+      "<y-button ${1:placeholder} type=\"${2|primary,dashed,text,info,success,warning,error|}\"></y-button>"
+    ],
+    "description": "YOUI Vue2.x 按钮组件"
+  }
+}
