@@ -11,7 +11,7 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:yo-design-vue2-vs.helloWorld",
+		"onCommand:yodv-helper.snippets",
 		"onLanguage:javascript",
 		"onLanguage:vue",
 		"onLanguage:vue-html",
@@ -22,24 +22,40 @@
 	"main": "./src/extension.js",
 	"contributes": {
 		"configuration": {
-			"title": "Yo-Design-Vue2 Snippets",
+			"type": "object",
+			"title": "Yo-Design-Vue2 Snippets Configuration",
 			"properties": {
 				"yo.showTip": {
 					"type": "boolean",
 					"default": true,
 					"description": "是否在每次启动的时候显示欢迎提示"
+				},
+				"yo.docUrl": {
+					"type": "string",
+					"default": "http://localhost:8089",
+					"description": "YOUI文档说明地址"
+				},
+				"yo.indent-size": {
+					"type": "number",
+					"default": 2,
+					"description": "代码片段默认缩进空格数"
+				},
+				"yo.quotes": {
+					"type": "string",
+					"default": "double",
+					"description": "引号默认使用双引号"
 				}
 			}
 		},
 		"commands": [
 			{
-				"command": "yo-design-vue2-vs.helloWorld",
+				"command": "yodv-helper.snippets",
 				"title": "Yo-Design-Vue2 Snippets"
 			}
 		],
 		"keybindings": [
 			{
-				"command": "yo-design-vue2-vs.helloWorld",
+				"command": "yodv-helper.snippets",
 				"key": "ctrl+f2",
 				"mac": "cmd+f2",
 				"when": "editorTextFocus"
@@ -49,29 +65,17 @@
 			"editor/context": [
 				{
 					"when": "editorFocus&&resourceLangId===html",
-					"command": "yo-design-vue2-vs.helloWorld",
+					"command": "yodv-helper.snippets",
 					"group": "navigation"
 				},
 				{
 					"when": "editorFocus",
-					"command": "yo-design-vue2-vs.helloWorld",
+					"command": "yodv-helper.snippets",
 					"group": "navigation"
 				}
 			]
 		},
 		"snippets": [
-			{
-				"language": "html",
-				"path": "./snippets/html.json"
-			},
-			{
-				"language": "vue",
-				"path": "./snippets/html.json"
-			},
-			{
-				"language": "vue-html",
-				"path": "./snippets/html.json"
-			},
 			{
 				"language": "javascript",
 				"path": "./snippets/javascript.json"
@@ -115,7 +119,6 @@
 		]
 	},
 	"scripts": {
-		"postinstall": "node ./node_modules/vscode/bin/install",
 		"lint": "eslint .",
 		"pretest": "yarn run lint",
 		"test": "node ./test/runTest.js"
@@ -139,5 +142,9 @@
 		"mocha": "^8.2.1",
 		"typescript": "^4.1.3",
 		"vscode-test": "^1.5.0"
+	},
+	"dependencies": {
+		"pretty": "^2.0.0",
+		"shelljs": "^0.8.3"
 	}
 }
