@@ -5,7 +5,8 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
-const BASES =require('./snippets/base.js')
+const BASES =require('./snippets/base')
+const COMPONENTS =require('./snippets/components')
 const prettyHTML = require('pretty')
 
 // this method is called when your extension is activated
@@ -70,22 +71,66 @@ function deactivate() {
 function provideCompletionItems(document, position, token, context) {
 	console.log("provideCompletionItems--", position.line);
 	if (position.line == 0) {
-		return buildBaseSuggestion(document,position);
+		return buildBaseTagSuggestion(document,position);
+	} else {
+		return buildTagSuggestion(document, position);
 	}
 			return [];
 }
 
-function buildBaseSuggestion(document, position) {
-	let suggestions=[]
-	console.log(document.getText(new vscode.Range(new vscode.Position(position.line, 0), position)), position.line, position.character)
+/**
+ * 建立基础模板提示列表
+ * @param {*} document 
+ * @param {*} position 
+ * @returns 
+ */
+function buildBaseTagSuggestion(document, position) {
+	let suggestions = []
+	let text=document.getText(new vscode.Range(new vscode.Position(position.line, 0), position))
+	console.log("buildBaseTagSuggestion",text, position.line, position.character)
 
 	// const config = vscode.workspace.getConfiguration('yo');
 	// const size=config.get("indent_size")
+	let reg = /^\w$/;
+	if (!reg.test(text)) {
+		return
+	}
+	console.log("符合条件才进行提示",text)
 	let id = 100;
-	console.log("BASES=",BASES['y-vue-base-js'])
+	// console.log("BASES=",BASES['y-vue-base-js'])
 	for (let tag in BASES) {
 		let base = BASES[tag]
-		console.log("base=",tag)
+		// console.log("base=",tag)
+		let { body, description } = base || {}
+		let suggestion={
+      label: tag,
+      sortText: `0${id}${tag}`,
+      insertText: new vscode.SnippetString(prettyHTML(body.join(''),{ocd:true})),
+      kind: vscode.CompletionItemKind.Snippet,
+      detail: 'YOUI Design Vue',
+      documentation: description
+    }
+		// console.log("suggestions=",suggestions)
+		suggestions.push(
+			suggestion
+		);
+		// console.log("suggestions=",suggestions)
+	}
+
+	// console.log("suggestions=",suggestions)
+	return suggestions
+}
+function buildTagSuggestion(document, position) {
+	let suggestions = []
+	let text = document.getText(new vscode.Range(new vscode.Position(position.line, 0), position));
+	console.log(text, position.line, position.character)
+	// const config = vscode.workspace.getConfiguration('yo');
+	// const size=config.get("indent_size")
+	let id = 100;
+	console.log("COMPONENTS=",COMPONENTS['y-button'],COMPONENTS)
+	for (let tag in COMPONENTS) {
+		let base = COMPONENTS[tag]
+		console.log("base=",tag,base)
 		let { body, description } = base || {}
 		let suggestion={
       label: tag,
