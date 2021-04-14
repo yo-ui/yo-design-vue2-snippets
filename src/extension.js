@@ -8,7 +8,19 @@ const vscode = require('vscode');
 const BASES =require('./snippets/base')
 const COMPONENTS =require('./snippets/components')
 const prettyHTML = require('pretty')
-
+// 属性值正则
+const attrValueReg = /^\w+\s*=\s*['"]?\w*$/;
+// 标签值正则
+const tagValueReg = /^<?([a-zA-z0-9\-_]+)\s+.*$/;
+// 文件正则
+const vueFileReg = /\.[vue|html]$/;
+// ui 标签开始正则
+const yoStartReg = /\<?y-.*/;
+//标签名 正则
+const tagReg = /^\w$/;
+//替换得到真正的prop值
+const attrReplaceReg = /^\s*(\w*)\s*=\s*['"]?.*$/;
+const triggerSymbols = ["", " ", ":", "<", '"', "/", "'", "@", "(", "{","."];
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 
@@ -42,7 +54,7 @@ function activate(context) {
         provideHover(document, position, token) {
             const fileName = document.fileName;
             const word = document.getText(document.getWordRangeAtPosition(position));
-            if (/\.[vue|html]$/.test(fileName) && /\<?y-.*/.test(word)) {
+            if (vueFileReg.test(fileName) && yoStartReg.test(word)) {
                 return new vscode.Hover("测试悬停提示");
             }
             return undefined;
@@ -56,8 +68,8 @@ function activate(context) {
 	}], {
 		provideCompletionItems,
 		resolveCompletionItem
-	}, "", " ", ":", "<", '"', "/", "'", "@", "(", "{");
-	console.log("base",BASES)
+	}, ...triggerSymbols);
+	// console.log("base",BASES)
 	context.subscriptions.push(disposable,hoverProvider,itemProvider);
 }
 /**
@@ -70,37 +82,123 @@ function deactivate() {
 
 function provideCompletionItems(document, position, token, context) {
 	console.log("provideCompletionItems--", position.line);
-	if (position.line == 0) {
-		return buildBaseTagSuggestion(document,position);
-	} else {
-		return buildTagSuggestion(document, position);
+	let text = document.getText(new vscode.Range(new vscode.Position(position.line, 0), position));
+	const config = vscode.workspace.getConfiguration('yo');
+	// 缩进数
+	const size = config.get("indent_size")
+	//使用的引号类型
+	let quotes = config.get("quotes")
+	quotes=quotes==='double'?'"':"'"
+	text = text.trim();
+	if (text) {
+		if (position.line == 0) {
+			return buildBaseTagSuggestion({text,document,position});
+		} else {
+			let attr = text.substring(text.lastIndexOf(' '), position.character);//
+			let tag = text.replace(tagValueReg, (_, $1) => $1);
+			console.log("attr=", attr,'tag=',tag);
+			//如果输入是属性值  以" ' 结尾则说明为输入属性值
+			if (attrValueReg.test(attr.trim())) {
+				return buildAttrValueSuggestions({ tag, text: attr,size,quotes, document, position });			
+			} else if (attr.indexOf(' ')>-1) {// 属性前面有空格
+				return buildAttrSuggestions({ tag,text: attr,size,quotes, document, position });
+			}
+			//如果输入是属性
+			return buildTagSuggestions({text,document, size,quotes,position});
+		}		
 	}
-			return [];
+	return [];
+}
+
+//建立属性值自动提示
+function buildAttrValueSuggestions({ tag,text,document, position,size,quotes,}){
+	let attr = text.replace(attrReplaceReg, (_, $1) => $1);
+	console.log("buildAttrValueSuggestions,attr=", attr)
+	let tagObj = COMPONENTS[tag];
+	let suggestions = []
+	if (tagObj) {
+		let { prop } = tagObj;
+		let propObj = prop[attr]
+		if (propObj) {
+			let { options ,optionType} = propObj
+			if (!options) {
+				if (optionType === 'boolean') {
+					options = ['true', 'false'];
+				}
+			}
+			options.forEach(item => {
+				let suggestion = {
+					label: item,
+					kind: vscode.CompletionItemKind.Value,
+				}
+				suggestions.push(
+					suggestion
+				);
+			});			
+		}		
+	}
+	console.log("buildAttrValueSuggestions,suggestions=",suggestions)
+	return suggestions;
+}
+
+// 建立属性列表自动提示
+function buildAttrSuggestions({ size,quotes,tag,text,document, position}){
+	let attr = text.replace(attrReplaceReg, (_, $1) => $1);
+	console.log("buildAttrSuggestions,attr=",attr)
+	let tagObj = COMPONENTS[tag];
+	let suggestions = []
+	if (tagObj) {
+		let { props,prop,events } = tagObj;		
+		props.forEach(item => {
+			let propObj = prop[item] || {}
+			let { optionType, description = "", defaultValue = "" } = propObj || {}
+			let suggestion = {
+				label: item,
+				insertText: optionType === 'boolean' ? `${item} ` : new vscode.SnippetString(`${item}=${quotes}$\{1:${defaultValue}\}${quotes}$0`),
+				kind: vscode.CompletionItemKind.Property,
+				detail: 'YOUI Design Vue',
+				documentation: description,
+			};
+			suggestions.push(
+				suggestion
+			);
+		});
+		events.forEach(item => {
+			let propObj = prop[item] || {}
+			let { description = "" } = propObj || {}
+			let suggestion = {
+				label: item,
+				insertText: new vscode.SnippetString(`@${item}=${quotes}$\{1:()=>{}\}${quotes}$0`),
+				kind: vscode.CompletionItemKind.Method,
+				detail: 'YOUI Design Vue',
+				documentation: description,
+			};
+			suggestions.push(
+				suggestion
+			);
+		});
+	}
+
+	console.log("buildAttrSuggestions,suggestions=",suggestions)
+	return suggestions;
 }
 
 /**
  * 建立基础模板提示列表
- * @param {*} document 
- * @param {*} position 
+ * @param {*} document ,position
  * @returns 
  */
-function buildBaseTagSuggestion(document, position) {
+function buildBaseTagSuggestion({tag,text,document, position}) {
 	let suggestions = []
-	let text=document.getText(new vscode.Range(new vscode.Position(position.line, 0), position))
 	console.log("buildBaseTagSuggestion",text, position.line, position.character)
-
-	// const config = vscode.workspace.getConfiguration('yo');
-	// const size=config.get("indent_size")
-	let reg = /^\w$/;
-	if (!reg.test(text)) {
+	// let reg = /^\w$/;
+	if (!tagReg.test(text)) {
 		return
 	}
 	console.log("符合条件才进行提示",text)
 	let id = 100;
-	// console.log("BASES=",BASES['y-vue-base-js'])
 	for (let tag in BASES) {
 		let base = BASES[tag]
-		// console.log("base=",tag)
 		let { body, description } = base || {}
 		let suggestion={
       label: tag,
@@ -110,51 +208,76 @@ function buildBaseTagSuggestion(document, position) {
       detail: 'YOUI Design Vue',
       documentation: description
     }
-		// console.log("suggestions=",suggestions)
 		suggestions.push(
 			suggestion
 		);
-		// console.log("suggestions=",suggestions)
 	}
-
-	// console.log("suggestions=",suggestions)
 	return suggestions
 }
-function buildTagSuggestion(document, position) {
+
+
+// 建立标签提示列表
+function buildTagSuggestions({text,document,size,quotes, position}) {
 	let suggestions = []
-	let text = document.getText(new vscode.Range(new vscode.Position(position.line, 0), position));
+	// let text = document.getText(new vscode.Range(new vscode.Position(position.line, 0), position));
 	console.log(text, position.line, position.character)
-	// const config = vscode.workspace.getConfiguration('yo');
-	// const size=config.get("indent_size")
+	
 	let id = 100;
-	console.log("COMPONENTS=",COMPONENTS['y-button'],COMPONENTS)
+	// console.log("COMPONENTS=",COMPONENTS['y-button'],COMPONENTS)
 	for (let tag in COMPONENTS) {
-		let base = COMPONENTS[tag]
-		console.log("base=",tag,base)
-		let { body, description } = base || {}
-		let suggestion={
-      label: tag,
-      sortText: `0${id}${tag}`,
-      insertText: new vscode.SnippetString(prettyHTML(body.join(''),{ocd:true})),
-      kind: vscode.CompletionItemKind.Snippet,
-      detail: 'YOUI Design Vue',
-      documentation: description
-    }
-		console.log("suggestions=",suggestions)
-		suggestions.push(
-			suggestion
-		);
-		console.log("suggestions=",suggestions)
+		suggestions.push(buildTagSuggestionItem({size,quotes,id,tag,text, document, position}));
+		id++;
 	}
 
 	console.log("suggestions=",suggestions)
 	return suggestions
 }
+
+//建立单个标签提示项
+function buildTagSuggestionItem({id,tag,text,document, position,size,quotes}) {
+	console.log(text, position.line, position.character)
+	let base = COMPONENTS[tag]
+	let { description, } = base || {}
+	let content = buildTagContent({text, tag, size, quotes});
+	// console.log('---content',text,content)
+	let suggestion={
+		label: tag,
+		sortText: `0${id}${tag}`,
+		insertText: new vscode.SnippetString(prettyHTML(content,{ocd:true})),
+		kind: vscode.CompletionItemKind.Snippet,
+		detail: 'YOUI Design Vue',
+		documentation: description
+	}
+	console.log("suggestion=",suggestion)
+	return suggestion
+}
+// 获取标签片段
+function buildTagContent({text,tag,size,quotes}) {
+	let base = COMPONENTS[tag]
+	let {  prop = {}, defaultProps = [], defaultEvents = [] ,subTags=[]} = base || {}
+	let propText = defaultProps.map((item, index) => {
+		let propObj = prop[item]
+		let { defaultValue = "" } = propObj || {}
+		return `${item}=${quotes}$\{${index}:${defaultValue}\}${quotes}`
+	}).join(" ");
+	let subTagText = subTags.map((item) => {
+		return buildTagContent({ tag: item, text,size,quotes });
+	}).join(" ");
+	let eventText = defaultEvents.map((item, index) => {
+		return `@${item}=${quotes}$\{${index}:()=>{}\}${quotes}`
+		}).join(" ");
+	let content = `<${tag} ${propText} ${eventText}>
+	${subTagText}</${tag}>`
+	if (text.trim() === '<') {
+		content = content.substr(1);
+	}
+	return content;
+}
 		
 function resolveCompletionItem(item, token) {
 	console.log("resolveCompletionItem--", item);
-			return null;
-		}
+	return null;
+}
 
 module.exports = {
 	activate,
