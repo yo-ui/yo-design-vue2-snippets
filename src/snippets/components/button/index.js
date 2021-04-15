@@ -83,14 +83,14 @@ module.exports = {
         'options': ['y', 'setting', 'search', 'star', 'right', 'plus', 'minus', 'more', 'password',
           'mobile', 'left', 'eye','eye-close', 'location', 'category', 'cart', 'user', 'service', 'image', 'edit', 'remove', 'email', 'refresh', 'copy', 'down', 'up','upload'],
         'optionType': 'string',
-        'defaultValue':'false',
+        'defaultValue':'',
         'description':'左侧引用图标名称,可选值为对应的图标类，若为内部icon类，则可省略yo-icon-前缀'
       },
       'rightIcon': {
         'options': ['y', 'setting', 'search', 'star', 'right', 'plus', 'minus', 'more', 'password',
           'mobile', 'left', 'eye','eye-close', 'location', 'category', 'cart', 'user', 'service', 'image', 'edit', 'remove', 'email', 'refresh', 'copy', 'down', 'up','upload'],
         'optionType': 'string',
-        'defaultValue':'false',
+        'defaultValue':'',
         'description':'右侧引用图标名称,可选值为对应的图标类，若为内部icon类，则可省略yo-icon-前缀'
       },
       'to': {
@@ -104,8 +104,9 @@ module.exports = {
         'description':'路由跳转时，开启 replace 将不会向 history 添加新记录'
       },
       'target': {
-        'optionType': 'boolean',
-        'defaultValue':'false',
+        'options':['_self','_blank','_parent','_top'],
+        'optionType': 'string',
+        'defaultValue':'_self',
         'description':'路由跳转时，相当于 a 链接的 target 属性,可选值请参考HTML标准,可选值有_self 、_blank、_parent、_top'
       },
       'nativeType': {
