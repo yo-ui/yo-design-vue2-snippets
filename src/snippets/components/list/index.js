@@ -13,7 +13,7 @@ module.exports = {
     // 组件片段默认显示的属性
     'defaultProps': ['header','footer','loading'],
     //显示的代码片段
-    // 'body':['<y-list type="$0" @click="${1:()=>{}}"></y-list>'],
+		'body':'<template v-slot:action></template><template v-slot:extra></template>',
     // 组件说明
     'description': '最基础的列表展示，可承载文字、列表、图片、段落，常用于后台数据展示页面。',
     // 属性说明

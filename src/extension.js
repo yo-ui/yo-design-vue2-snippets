@@ -370,7 +370,7 @@ function buildTagSuggestionItem({
 // 获取标签片段
 function buildTagContent({ text, tag, size, quotes }) {
 	let base = COMPONENTS[tag];
-	let { prop = {}, defaultProps = [], defaultEvents = [], subTags = [] } =
+	let { prop = {}, defaultProps = [], defaultEvents = [], subTags = [] ,body=""} =
 		base || {};
 	let propText = defaultProps
 		.map((item, index) => {
@@ -407,7 +407,7 @@ function buildTagContent({ text, tag, size, quotes }) {
 		})
 		.join(" ");
 	let content = `<${tag} ${propText} ${eventText}>
-	${subTagText}</${tag}>`;
+	${subTagText}${body||""}</${tag}>`;
 	if (text.trim() === "<") {
 		content = content.substr(1);
 	}
