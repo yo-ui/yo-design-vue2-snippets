@@ -8,6 +8,8 @@ const icon=require('./icon')
 const list=require('./list')
 const listItem=require('./listItem')
 const listItemMeta=require('./listItemMeta')
+const card=require('./card')
+const cardMeta=require('./cardMeta')
 module.exports = {
   ...buttonGroup,
   ...button,
@@ -18,4 +20,6 @@ module.exports = {
   ...list,
   ...listItem,
   ...listItemMeta,
+  ...card,
+  ...cardMeta,
 }
