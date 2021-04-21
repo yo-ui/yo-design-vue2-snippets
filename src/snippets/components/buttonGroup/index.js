@@ -5,12 +5,11 @@ module.exports = {
     //组件属性
     'props': ['round', 'size', 'vertical', 'reverse'],
     //组件事件
-    // 'events': ['click'],
-    // 'defaultEvents': ['click'],
+    'events': [],
+    // 默认事件
+    'defaultEvents': [],
     // 组件片段默认显示的属性
-    // 'defaultProps': [''],
-    //显示的代码片段
-    // 'body':['<y-button type="$0" @click="${1:()=>{}}"></y-button>'],
+    'defaultProps': [],
     //子标签
     'subTags':['y-button','y-button'],
     // 组件说明
@@ -19,23 +18,23 @@ module.exports = {
     'prop': {
       'round': {
         'optionType': 'boolean',
-        'defaultValue':'false',
+        'defaultValue':false,
         'description':'按钮是否圆角显示'
       },
       'size': {
-        'options':['xxl','xl','l','m','s','xs'],
+        'options':['xxxl','xxl','xl','l','m','s','xs'],
         'optionType': 'string',
         'defaultValue':'',
         'description':'按钮大小，可选值有xxl,xl,l、m、s、xs,不填则为默认大小'
       },
       'vertical': {
         'optionType': 'boolean',
-        'defaultValue':'false',
+        'defaultValue':false,
         'description':'是否纵向排列按钮组'
       },
       'reverse': {
         'optionType': 'boolean',
-        'defaultValue':'false',
+        'defaultValue':false,
         'description':'是否将按钮组反向'
       }
     }

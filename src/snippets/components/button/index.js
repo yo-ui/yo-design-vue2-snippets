@@ -10,7 +10,7 @@ module.exports = {
     // 组件片段默认显示的属性
     'defaultProps': ['type'],
     //显示的代码片段
-    'body':['<y-button type="$0" @click="${1:()=>{}}"></y-button>'],
+    // 'body':['<y-button type="$0" @click="${1:()=>{}}"></y-button>'],
     // 组件说明
     'description': '基础组件，用于开始一个即时操作，触发业务逻辑时使用',
     // 属性说明
@@ -24,47 +24,47 @@ module.exports = {
       },
       'ghost': {
         'optionType': 'boolean',
-        'defaultValue':'false',
+        'defaultValue':false,
         'description':'幽灵属性，使按钮背景透明'
       },
       'disabled': {
         'optionType': 'boolean',
-        'defaultValue':'false',
+        'defaultValue':false,
         'description':'按钮失效状态'
       },
       'circle': {
         'optionType': 'boolean',
-        'defaultValue':'false',
+        'defaultValue':false,
         'description':'按钮是否圆形或椭圆显示'
       },
       'round': {
         'optionType': 'boolean',
-        'defaultValue':'false',
+        'defaultValue':false,
         'description':'按钮是否圆角显示'
       },
       'square': {
         'optionType': 'boolean',
-        'defaultValue':'false',
+        'defaultValue':false,
         'description':'按钮是否方角显示'
       },
       'plain': {
         'optionType': 'boolean',
-        'defaultValue':'false',
+        'defaultValue':false,
         'description':'按钮是否朴素显示'
       },
       'border': {
         'optionType': 'boolean',
-        'defaultValue':'true',
+        'defaultValue':true,
         'description':'按钮是否显示边框'
       },
       'block': {
         'optionType': 'boolean',
-        'defaultValue':'false',
+        'defaultValue':false,
         'description':'按钮是否占一行显示,开启后，按钮的长度为 100%'
       },
       'loading': {
         'optionType': 'boolean',
-        'defaultValue':'false',
+        'defaultValue':false,
         'description':'是否加载中，将覆盖原有左侧引用的图标'
       },
       'loadingName': {
@@ -74,7 +74,7 @@ module.exports = {
         'description':'是否加载中，内置loading样式,可选值为loading、loading1、loading2、loading3、loading4以及对应的loading图标类名'
       },
       'size': {
-        'options':['xxl','xl','l','m','s','xs'],
+        'options':['xxxl','xxl','xl','l','m','s','xs'],
         'optionType': 'string',
         'defaultValue':'',
         'description':'按钮大小，可选值有xxl,xl,l、m、s、xs,不填则为默认大小'
@@ -100,7 +100,7 @@ module.exports = {
       },
       'replace': {
         'optionType': 'boolean',
-        'defaultValue':'false',
+        'defaultValue':false,
         'description':'路由跳转时，开启 replace 将不会向 history 添加新记录'
       },
       'target': {

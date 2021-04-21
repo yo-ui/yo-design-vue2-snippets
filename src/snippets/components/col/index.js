@@ -4,12 +4,13 @@ module.exports = {
   'y-col': {
     //组件属性
     'props': ['flex', 'offset', 'order', 'span', 'pull', 'push', 'xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'xxxl', 'tag'],
-    //组件事件
-    // 'events': ['click'],
-    // 'defaultEvents': ['click'],
+    //组件事件列表
+    'events': [],
+    //默认事件
+    'defaultEvents': [],
     // 组件片段默认显示的属性
-    // 'defaultProps':['type'],
-    // 'body':['<y-col span="$0"></y-col>'],
+    'defaultProps':['span'],
+    //标签描述
     'description':'基础组件，栅格列',
     'prop': {
       'flex': {

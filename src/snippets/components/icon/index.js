@@ -4,12 +4,13 @@ module.exports = {
   'y-icon': {
     //组件属性
     'props': ['type', 'size', 'color', 'rotate'],
-    //组件事件
-    // 'events': ['click'],
-    // 'defaultEvents': ['click'],
+    //组件事件列表
+    'events': [],
+    //默认事件
+    'defaultEvents': [],
     // 组件片段默认显示的属性
     'defaultProps':['type','size'],
-    // 'body':['<y-icon type="$0" size="$1"/>'],
+    // 组件描述
     'description':'基础组件，图标',
     'prop': {
       'type': {
@@ -28,17 +29,17 @@ module.exports = {
       },
       'color': {
         //选项列表
-        options:['#0a9fad','#2db7f5','#19be6b','#ff9900','#ed4014','#515a6e'],
-        optionType: 'number',
+        options:['primary', 'info', 'success', 'warning', 'error','#0a9fad','#2db7f5','#19be6b','#ff9900','#ed4014','#515a6e'],
+        optionType: 'string',
         defaultValue:'',
-        description:'设置图标大小尺寸'
+        description:'设置图标颜色'
       },
       'rotate': {
         //选项列表
         options:['0','45','90','135','180','225','270','315'],
         optionType: 'number',
         defaultValue:'0',
-        description:'设置图标大小尺寸'
+        description:'设置图标旋转角度'
       },
     }
   }

@@ -4,38 +4,34 @@ module.exports = {
   'y-row': {
     //组件属性
     'props': ['gutter', 'gutterX', 'gutterY', 'type', 'align', 'direction', 'justify', 'tag'],
-    //组件事件
-    // 'events': ['click'],
-    // 'defaultEvents': ['click'],
-    // 组件片段默认显示的属性
-    // 'defaultProps': ['type'],
+    //组件事件列表
+    'events': [],
+    //默认事件
+    'defaultEvents': [],
     //子标签
     'subTags':['y-col','y-col'],
-    // 'body': ['<y-row>',
-    //   '<y-col span="12">y-col-12</y-col>',
-    //   '<y-col span="12">y-col-12</y-col>',
-    // '</y-row>',],
+    // 组件描述gl
     'description':'基础组件，栅格行',
     'prop': {
       'gutter': {
         //选项列表
         // 'options': ['primary', 'dashed', 'text', 'info', 'success', 'warning', 'error'],
         'optionType': 'number',
-        'defaultValue':'0',
+        'defaultValue':0,
         'description':'栅格间距，单位 px，上下左右平分'
       },
       'gutterX': {
         //选项列表
         // 'options': ['primary', 'dashed', 'text', 'info', 'success', 'warning', 'error'],
         'optionType': 'number',
-        'defaultValue':'0',
+        'defaultValue':0,
         'description':'栅格间距，单位 px，左右平分'
       },
       'gutterY': {
         //选项列表
         // 'options': ['primary', 'dashed', 'text', 'info', 'success', 'warning', 'error'],
         'optionType': 'number',
-        'defaultValue':'0',
+        'defaultValue':0,
         'description':'栅格间距，单位 px，上下平分'
       },
       'type': {

@@ -59,6 +59,10 @@ function activate(context) {
 				scheme: "file",
 			},
 			{
+				language: "vue-html",
+				scheme: "file",
+			},
+			{
 				language: "html",
 				scheme: "file",
 			},
@@ -134,10 +138,10 @@ function provideCompletionItems(document, position, token, context) {
 				return buildAttrValueSuggestions({
 					tag,
 					text: attrValue,
-					size,
-					quotes,
-					document,
-					position,
+					// size,
+					// quotes,
+					// document,
+					// position,
 				});
 			} else if (attr.indexOf(" ") > -1) {
 				// 属性前面有空格
@@ -167,10 +171,10 @@ function provideCompletionItems(document, position, token, context) {
 function buildAttrValueSuggestions({
 	tag,
 	text,
-	document,
-	position,
-	size,
-	quotes,
+	// document,
+	// position,
+	// size,
+	// quotes,
 }) {
 	let attr = text.replace(attrReplaceReg, (_, $1) => $1);
 	console.log("buildAttrValueSuggestions,attr=", attr);
@@ -200,25 +204,34 @@ function buildAttrValueSuggestions({
 }
 
 // 建立属性列表自动提示
-function buildAttrSuggestions({ size, quotes, tag, text, document, position }) {
+function buildAttrSuggestions({
+	quotes,
+	tag,
+	text,
+	// size,
+	// document,
+	//  position
+}) {
 	let attr = text.replace(attrReplaceReg, (_, $1) => $1).trim();
-	console.log("buildAttrSuggestions,attr=", attr);
 	let tagObj = COMPONENTS[tag];
+	console.log("buildAttrSuggestions,attr=", attr, tag, tagObj);
 	let suggestions = [];
 	if (tagObj) {
-		let { props, prop, events } = tagObj;
+		let { props = [], prop, events = [] } = tagObj;
 		if (attr[0] !== "@") {
 			props.forEach((item) => {
 				let propObj = prop[item] || {};
-				let { optionType, description = "", defaultValue = "" } =
+				let { optionType, description = "", defaultValue } =
 					propObj || {};
 				let suggestion = {
 					label: item,
 					insertText:
-						optionType === "boolean"
+						optionType === "boolean" && defaultValue
 							? `${item} `
 							: new vscode.SnippetString(
-									`${item}=${quotes}$\{1:${defaultValue}\}${quotes}$0`
+									`${item}=${quotes}$\{1:${
+										defaultValue !== "" ? ":" : ""
+									}${defaultValue}\}${quotes}$0`
 							  ),
 					kind: vscode.CompletionItemKind.Property,
 					detail: "YOUI Design Vue",
@@ -256,7 +269,12 @@ function buildAttrSuggestions({ size, quotes, tag, text, document, position }) {
  * @param {*} document ,position
  * @returns
  */
-function buildBaseTagSuggestion({ tag, text, document, position }) {
+function buildBaseTagSuggestion({
+	// tag,
+	// document,
+	text,
+	position,
+}) {
 	let suggestions = [];
 	console.log(
 		"buildBaseTagSuggestion",
@@ -289,7 +307,13 @@ function buildBaseTagSuggestion({ tag, text, document, position }) {
 }
 
 // 建立标签提示列表
-function buildTagSuggestions({ text, document, size, quotes, position }) {
+function buildTagSuggestions({
+	text,
+	// document,
+	size,
+	quotes,
+	position,
+}) {
 	let suggestions = [];
 	// let text = document.getText(new vscode.Range(new vscode.Position(position.line, 0), position));
 	console.log(text, position.line, position.character);
@@ -304,7 +328,7 @@ function buildTagSuggestions({ text, document, size, quotes, position }) {
 				id,
 				tag,
 				text,
-				document,
+				// document,
 				position,
 			})
 		);
@@ -320,7 +344,7 @@ function buildTagSuggestionItem({
 	id,
 	tag,
 	text,
-	document,
+	// document,
 	position,
 	size,
 	quotes,
@@ -351,8 +375,25 @@ function buildTagContent({ text, tag, size, quotes }) {
 	let propText = defaultProps
 		.map((item, index) => {
 			let propObj = prop[item];
-			let { defaultValue = "" } = propObj || {};
-			return `${item}=${quotes}$\{${index}:${defaultValue}\}${quotes}`;
+			let { defaultValue, optionType } = propObj || {};
+			console.log(
+				"buildTagContent,item=",
+				item,
+				",defaultValue=",
+				defaultValue,
+				",optionType=",
+				optionType,
+				",tag=",
+				tag
+			);
+			if (optionType === "string") {
+				return `${item}=${quotes}$\{${index}${
+					defaultValue !== "" ? ":" : ""
+				}${defaultValue}\}${quotes}`;
+			}
+			return `:${item}=${quotes}$\{${index}${
+				defaultValue !== "" ? ":" : ""
+			}${defaultValue}\}${quotes}`;
 		})
 		.join(" ");
 	let subTagText = subTags
@@ -374,7 +415,7 @@ function buildTagContent({ text, tag, size, quotes }) {
 }
 
 function resolveCompletionItem(item, token) {
-	console.log("resolveCompletionItem--", item);
+	console.log("resolveCompletionItem--", item, token);
 	return null;
 }
 
