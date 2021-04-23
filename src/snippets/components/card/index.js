@@ -110,7 +110,7 @@ module.exports = {
 				//   'mobile', 'left', 'eye','eye-close', 'location', 'category', 'cart', 'user', 'service', 'image', 'edit', 'remove', 'email', 'refresh', 'copy', 'down', 'up','upload'],
 				optionType: "number",
 				defaultValue: 24,
-				description: "split",
+				description: "卡片内边距",
 			},
 			shadow: {
 				// 'options': ['y', 'setting', 'search', 'star', 'right', 'plus', 'minus', 'more', 'password',

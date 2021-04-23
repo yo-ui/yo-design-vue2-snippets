@@ -3,7 +3,7 @@
 module.exports = {
   'y-list': {
     //组件属性
-    'props': [ 'border', 'header', 'footer', 'loading','size','split','reverse','vertical'],
+    'props': [ 'border', 'header', 'borderRadius','footer', 'loading','size','split','reverse','vertical'],
     //组件事件
     // 'events': ['click'],
     //默认显示事件
@@ -22,6 +22,11 @@ module.exports = {
         'optionType': 'boolean',
         'defaultValue':true,
         'description':'是否显示边框'
+      },
+      'borderRadius': {
+        'optionType': 'number',
+        'defaultValue':0,
+        'description':'边框圆角'
       },
       'header': {
         'optionType': 'string',
@@ -50,7 +55,7 @@ module.exports = {
         //   'mobile', 'left', 'eye','eye-close', 'location', 'category', 'cart', 'user', 'service', 'image', 'edit', 'remove', 'email', 'refresh', 'copy', 'down', 'up','upload'],
         'optionType': 'boolean',
         'defaultValue':true,
-        'description':'split'
+        'description':'是否显示分割线'
       },
       'reverse': {
         // 'options': ['y', 'setting', 'search', 'star', 'right', 'plus', 'minus', 'more', 'password',
