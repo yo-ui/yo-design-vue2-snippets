@@ -3,6 +3,7 @@
 	"displayName": "YOUI Vue2.x Snippets",
 	"description": "Visual Studio Code YOUI Vuex2.x UI框架VSCode代码提示插件",
 	"version": "0.0.1",
+	"publisher": "yo-design-vue2-snippets",
 	"engines": {
 		"vscode": "^1.55.0"
 	},
@@ -32,7 +33,7 @@
 				},
 				"yo.docUrl": {
 					"type": "string",
-					"default": "http://localhost:8089",
+					"default": "https://yo-ui.gitee.io/youi/",
 					"description": "YOUI文档说明地址"
 				},
 				"yo.indent-size": {
@@ -83,13 +84,7 @@
 		],
 		"viewsWelcome": [],
 		"viewsContainers": {
-			"activitybar": [
-				{
-					"id": "beautifulGirl",
-					"title": "美女",
-					"icon": "images/logo.png"
-				}
-			]
+			"activitybar": []
 		},
 		"views": {
 			"explorer": [
@@ -97,16 +92,6 @@
 					"id": "nodeDependencies",
 					"name": "Node Dependencies",
 					"contextualTitle": "Package Explorer"
-				}
-			],
-			"beautifulGirl": [
-				{
-					"id": "beautifulGirl1",
-					"name": "国内美女"
-				},
-				{
-					"id": "beautifulGirl2",
-					"name": "国外美女"
 				}
 			]
 		},
@@ -124,13 +109,13 @@
 		"test": "node ./test/runTest.js"
 	},
 	"bugs": {
-		"url": "https://gitee.com/yo-ui/yo-design-vue2-vs/issues",
+		"url": "https://gitee.com/yo-ui/yo-design-vue2-snippets/issues",
 		"email": "1034850788@qq.com"
 	},
-	"homepage": "https://gitee.com/yo-ui/yo-design-vue2-vs.git",
+	"homepage": "https://yo-ui.gitee.io/youi/",
 	"repository": {
 		"type": "git",
-		"url": "https://gitee.com/yo-ui/yo-design-vue2-vs.git"
+		"url": "https://gitee.com/yo-ui/yo-design-vue2-snippets.git"
 	},
 	"devDependencies": {
 		"@types/vscode": "^1.55.0",

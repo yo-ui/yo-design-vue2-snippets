@@ -18,7 +18,7 @@ yo-design-vue2 Visual Studio Code 插件
 
 #### 安装教程
 
-1.  <a href="https://marketplace.visualstudio.com/items?itemName=yo-design-vue2-snippets">从市场安装</a>
+1.  <a href="https://marketplace.visualstudio.com/items?itemName=yo-design-vue2-snippets.yo-design-vue2-snippets">从市场安装</a>
 2.  通过命令(Ctrl|Cmd+Shift+P)安装
 ```
   ext install yo-design-vue2-snippets
