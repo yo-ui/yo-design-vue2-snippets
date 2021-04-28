@@ -13,6 +13,7 @@ const cardMeta=require('./cardMeta')
 const collapse=require('./collapse')
 const collapseItem=require('./collapseItem')
 const split=require('./split')
+const divide=require('./divide')
 module.exports = {
   ...buttonGroup,
   ...button,
@@ -28,4 +29,5 @@ module.exports = {
   ...collapse,
   ...collapseItem,
   ...split,
+  ...divide,
 }

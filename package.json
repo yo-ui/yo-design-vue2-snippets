@@ -2,7 +2,7 @@
 	"name": "yo-design-vue2-snippets",
 	"displayName": "YOUI Vue2.x Snippets",
 	"description": "Visual Studio Code YOUI Vuex2.x UI框架VSCode代码提示插件",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"publisher": "yo-design-vue2-snippets",
 	"engines": {
 		"vscode": "^1.55.0"
@@ -33,7 +33,7 @@
 				},
 				"yo.docUrl": {
 					"type": "string",
-					"default": "https://yo-ui.gitee.io/youi/",
+					"default": "https://yo-ui.github.io/",
 					"description": "YOUI文档说明地址"
 				},
 				"yo.indent-size": {
@@ -105,7 +105,7 @@
 		"url": "https://gitee.com/yo-ui/yo-design-vue2-snippets/issues",
 		"email": "1034850788@qq.com"
 	},
-	"homepage": "https://yo-ui.gitee.io/youi/",
+	"homepage": "https://yo-ui.github.io/",
 	"repository": {
 		"type": "git",
 		"url": "https://gitee.com/yo-ui/yo-design-vue2-snippets.git"
