@@ -6,15 +6,27 @@ yo-design-vue2 Visual Studio Code 插件
 #### 软件架构
 软件架构说明
 
+
 # 可用片段
 触发简写命令|描述
 ---|:--:
-<a href="超链接地址" target="_blank">y-button</a>|按钮组件
-<a href="超链接地址" target="_blank">y-icon</a>|图标组件
-<a href="超链接地址" target="_blank">y-row</a>|栅格行组件
-<a href="超链接地址" target="_blank">y-col</a>|栅格列组件
-<a href="超链接地址" target="_blank">y-link</a>|链接组件
-<a href="超链接地址" target="_blank">y-input</a>|文本框\|文本域组件
+<a href="https://yo-ui.gitee.io/youi/component/basic/button" target="_blank">y-button</a>|按钮组件
+<a href="https://yo-ui.gitee.io/youi/component/basic/button" target="_blank">y-button-group</a>|按钮组组件
+<a href="https://yo-ui.gitee.io/youi/component/layout/grid" target="_blank">y-row</a>|栅格行组件
+<a href="https://yo-ui.gitee.io/youi/component/layout/grid" target="_blank">y-col</a>|栅格列组件
+<a href="https://yo-ui.gitee.io/youi/component/basic/link" target="_blank">y-link</a>|链接组件
+<a href="https://yo-ui.gitee.io/youi/component/basic/icon" target="_blank">y-icon</a>|图标组件
+<a href="https://yo-ui.gitee.io/youi/component/layout/list" target="_blank">y-list</a>|列表组件
+<a href="https://yo-ui.gitee.io/youi/component/layout/list" target="_blank">y-list-item</a>|列表项组件
+<a href="https://yo-ui.gitee.io/youi/component/layout/list" target="_blank">y-list-item-meta</a>|列表项元数据组件
+<a href="https://yo-ui.gitee.io/youi/component/layout/card" target="_blank">y-card</a>|卡片组件
+<a href="https://yo-ui.gitee.io/youi/component/layout/card" target="_blank">y-card-meta</a>|卡片元数据组件
+<a href="https://yo-ui.gitee.io/youi/component/layout/collapse" target="_blank">y-collapse</a>|折叠面板组件
+<a href="https://yo-ui.gitee.io/youi/component/layout/collapse" target="_blank">y-collapse-item</a>|折叠面板项组件
+<a href="https://yo-ui.gitee.io/youi/component/layout/split" target="_blank">y-split</a>|分割面板组件
+<a href="https://yo-ui.gitee.io/youi/component/form/input" target="_blank">y-input</a>|文本框\|文本域组件
+<a href="https://yo-ui.gitee.io/youi/component/form/radio" target="_blank">y-radio</a>|单选框
+<a href="https://yo-ui.gitee.io/youi/component/form/checkbox" target="_blank">y-checkbox</a>|复选框
 
 #### 安装教程
 
@@ -24,6 +36,18 @@ yo-design-vue2 Visual Studio Code 插件
   ext install yo-design-vue2-snippets
 ```
 <img src="https://yo-ui.gitee.io/youi/images/preview.gif" style="max-width: 1000px"/>
+
+
+## 发布插件
+###  先登录工程组织
+```
+vsce login yo-design-vue2-snippets
+```
+
+### 发布工程
+```
+vsce publish      
+```  
 
 ## LICENSE
 
